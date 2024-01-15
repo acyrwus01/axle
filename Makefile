@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall
+CFLAGS = -Wall -pedantic
 LIBS =  -lpthread -fPIC
 OBJ_FILES = axle_itc.o main.o
 TARGET = itc_example

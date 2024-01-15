@@ -2,6 +2,8 @@
 #include "stb_ds.h"
 #include <stdio.h>
 #include <string.h>
+#include <sys/types.h>
+#include <unistd.h>
 
 #define ASSERT(condition, message) \
     do { \
@@ -12,45 +14,44 @@
         } \
     } while(0)
 
-void test_cb_1(itc_msg i);
-void test_cb_2(itc_msg i);
+void test_cb_1(const itc_msg i);
+void test_cb_2(const itc_msg i);
+typedef u_int64_t u64;
+int current_number1;
+
+itc_msg* msgs[1000];
+
 int main() {
     init_itc();
 
     add_reciever("Bababooey", &test_cb_1);
     add_reciever("Bababooey", &test_cb_2);
 
-    for(int i = 0; i < 10000; ++i)
+    for(u64 i = 0; i < 1000; ++i)
     {
-        itc_msg* msg = (itc_msg*)malloc(sizeof(itc_msg));
-
-        msg->data = (void*)i;
-        strcpy(msg->topic,"Bababooey");
-
-        add_msg(msg);
+        add_msg("Bababooey", (void*)i);
     }
 
-    itc_msg* msg = (itc_msg*)malloc(sizeof(itc_msg));
-    msg->data = (void*)1234;
-    strcpy(msg->topic,"Oi Krabs");
-    add_msg(msg);
+    add_msg("Bababooey", (void*)1234);
 
+    printf("What is current number??? %d\n", current_number1);
     cleanup_itc();
+    for(u64 i = 0; i < 1000; ++i) free(msgs[i]);
+    ASSERT(current_number1 == 1234, "Cringe");
 
 }
-int current_number1;
-void test_cb_1(itc_msg i)
+void test_cb_1(const itc_msg i)
 {
-    current_number1 = (int)i.data;
+    current_number1 = (u64)i.data;
     printf("Topic %s\n", i.topic);
-    printf("Data: %d\n", (int)i.data);
+    printf("Data: %zu\n", (u64)i.data);
 }
 
 int current_number2;
-void test_cb_2(itc_msg i)
+void test_cb_2( const itc_msg i)
 {
-    current_number2 = (int)i.data;
+    current_number2 = (u64)i.data;
     printf("Topic %s\n", i.topic);
-    printf("Data: %d\n", (int)i.data);
+    printf("Data: %zu\n", (u64)i.data);
     ASSERT(current_number1 == current_number2, "OR ELSE");
 }
