@@ -1,6 +1,6 @@
 CC = gcc
 CFLAGS = -Wall -fPIC -pedantic -g
-LIBS = -lpthread -lb64
+LIBS = -lpthread
 LIB_DIR = ./static
 SRC_DIR = .
 OBJ_DIR = ./build

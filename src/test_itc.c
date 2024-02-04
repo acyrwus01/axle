@@ -1,6 +1,7 @@
 #include "axle_itc.h"
 #include "axle_sched.h"
 #include "axle_typedefs.h"
+#include <unistd.h>
 
 
 void cb(const itc_msg msg)
@@ -27,7 +28,9 @@ int main(void)
 
     printf("Init %d\n", ret);
     schedule_task(task_one, 1 * NANOSECONDS_PER_SECOND, (void*)(value), false);
-    while(1){};
+    sleep(10);
+    sched_cleanup();
+    cleanup_itc();
 
     return 0;
 }
