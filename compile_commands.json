@@ -1,0 +1,7 @@
+[
+{
+  "directory": "/home/alex/build/Cpp/DBG",
+  "command": "/usr/bin/c++   -g -std=gnu++14 -o CMakeFiles/DBG.dir/src/log/main.cpp.o -c /home/alex/build/Cpp/DBG/src/log/main.cpp",
+  "file": "/home/alex/build/Cpp/DBG/src/log/main.cpp"
+}
+]

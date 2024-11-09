@@ -1,0 +1,47 @@
+{
+	"folders":
+	[
+		{
+			"path": "./"
+		}
+	],
+	"build_systems":
+	[
+		{
+			"name": "DBG - all",
+			"cmd": ["/usr/bin/gmake", "-f", "Makefile", "all"],
+			"working_dir": "${project_path}",
+			"file_regex": "^(..[^:]*)(?::|\\()([0-9]+)(?::|\\))(?:([0-9]+):)?\\s*(.*)"
+		},
+		{
+			"name": "DBG - clean",
+			"cmd": ["/usr/bin/gmake", "-f", "Makefile", "clean"],
+			"working_dir": "${project_path}",
+			"file_regex": "^(..[^:]*)(?::|\\()([0-9]+)(?::|\\))(?:([0-9]+):)?\\s*(.*)"
+		},
+		{
+			"name": "DBG - DBG",
+			"cmd": ["/usr/bin/gmake", "-f", "Makefile", "DBG"],
+			"working_dir": "${project_path}",
+			"file_regex": "^(..[^:]*)(?::|\\()([0-9]+)(?::|\\))(?:([0-9]+):)?\\s*(.*)"
+		},
+		{
+			"name": "DBG - DBG/fast",
+			"cmd": ["/usr/bin/gmake", "-f", "Makefile", "DBG/fast"],
+			"working_dir": "${project_path}",
+			"file_regex": "^(..[^:]*)(?::|\\()([0-9]+)(?::|\\))(?:([0-9]+):)?\\s*(.*)"
+		},
+		{
+			"name": "DBG - edit_cache",
+			"cmd": ["/usr/bin/gmake", "-f", "Makefile", "edit_cache"],
+			"working_dir": "${project_path}",
+			"file_regex": "^(..[^:]*)(?::|\\()([0-9]+)(?::|\\))(?:([0-9]+):)?\\s*(.*)"
+		},
+		{
+			"name": "DBG - rebuild_cache",
+			"cmd": ["/usr/bin/gmake", "-f", "Makefile", "rebuild_cache"],
+			"working_dir": "${project_path}",
+			"file_regex": "^(..[^:]*)(?::|\\()([0-9]+)(?::|\\))(?:([0-9]+):)?\\s*(.*)"
+		}
+	]
+}
