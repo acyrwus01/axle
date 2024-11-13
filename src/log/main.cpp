@@ -5,6 +5,40 @@
 #include <thread>
 #include <iostream>
 
+
+class BankAccount {
+    double balance;
+
+public:
+    BankAccount(double initial_balance) : balance(initial_balance) {
+        XINVARIANT(balance >= 0);  // Invariant: balance should never be negative
+    }
+
+    void Deposit(double amount) {
+        XPRECONDITION(amount > 0);  // Precondition: deposit amount must be positive
+
+        balance += amount;
+
+        XPOSTCONDITION(balance >= amount);  // Postcondition: balance should have increased
+        XINVARIANT(balance >= 0);           // Invariant check
+    }
+
+    void Withdraw(double amount) {
+        XPRECONDITION(amount > 0);                // Precondition: withdrawal amount must be positive
+        XPRECONDITION(balance >= amount);         // Precondition: balance must be sufficient
+
+        balance -= amount;
+
+        XPOSTCONDITION(balance >= 0);             // Postcondition: balance should not go negative
+        XINVARIANT(balance >= 0);                 // Invariant check
+    }
+
+    double GetBalance() const {
+        XINVARIANT(balance >= 0);                 // Invariant: balance should never be negative
+        return balance;
+    }
+};
+
 void logSampleMessages(const std::string& prefix) {
     LOGL("INFO", prefix, " System initialized with value: ", 42, ", status: ", true);
     LOGL("DEBUG", prefix, " User coordinates: ", 10.0, ", ", 20.0);
@@ -54,9 +88,20 @@ void test_asserts()
 
     std::cout << "Program continues after check failures.\n";
 
+    //XASSERT(x > y);
+
+}
+
+void test_contracts()
+{
+    BankAccount account(100);
+    account.Deposit(50);
+    account.Withdraw(30);
+    account.Withdraw(150);  // This will fail the precondition
 }
 
 int main() {
     test_log();
     test_asserts();
+    test_contracts();
 }

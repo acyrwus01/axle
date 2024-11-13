@@ -8,7 +8,7 @@
 #include <cmath>
 
 // Macro to enable or disable assertions
-#ifndef
+#ifndef ENABLE_XASSERTIONS
     #define ENABLE_XASSERTIONS 1
 #endif
 
@@ -38,7 +38,7 @@ void XAssertImpl(bool condition, const T& expression, const char* exprStr, const
         if (!customMessage.empty()) {
             oss << ": " << customMessage;
         }
-        std::cerr << oss.str() << "\n";
+        //std::cerr << oss.str() << "\n";
         throw AssertionFailed(oss.str());
     }
 }
@@ -63,6 +63,19 @@ void XCheckImpl(bool condition, const T& expression, const char* exprStr, const 
 #define XCHECK(expr) XCheckImpl((expr), (expr), #expr, __FILE__, __LINE__)
 #define XCHECK_MSG(expr, ...) XCheckImpl((expr), (expr), #expr, __FILE__, __LINE__, FormatMessage(__VA_ARGS__))
 
+// Design by Contract Macros
+// Preconditions: Checks conditions at the start of a function
+#define XPRECONDITION(expr) XASSERT(expr)
+#define XPRECONDITION_MSG(expr, ...) XASSERT_MSG(expr, FormatMessage("Precondition failed: ", __VA_ARGS__))
+
+// Postconditions: Checks conditions at the end of a function
+#define XPOSTCONDITION(expr) XASSERT(expr)
+#define XPOSTCONDITION_MSG(expr, ...) XASSERT_MSG(expr, FormatMessage("Postcondition failed: ", __VA_ARGS__))
+
+// Invariants: Checks conditions that must always hold true for the object state
+#define XINVARIANT(expr) XCHECK(expr)
+#define XINVARIANT_MSG(expr, ...) XCHECK_MSG(expr, FormatMessage("Invariant failed: ", __VA_ARGS__))
+
 // Floating-point comparison with tolerance
 #define XASSERT_FLOAT_EQ(lhs, rhs, tol) XASSERT_MSG(std::fabs((lhs) - (rhs)) <= (tol), "Expected: " #lhs " == " #rhs " within tolerance " #tol)
 #define XASSERT_FLOAT_NE(lhs, rhs, tol) XASSERT_MSG(std::fabs((lhs) - (rhs)) > (tol), "Expected: " #lhs " != " #rhs " beyond tolerance " #tol)
@@ -83,6 +96,12 @@ void XCheckImpl(bool condition, const T& expression, const char* exprStr, const 
 #define XASSERT_MSG(expr, ...) ((void)0)
 #define XCHECK(expr) ((void)0)
 #define XCHECK_MSG(expr, ...) ((void)0)
+#define XPRECONDITION(expr) ((void)0)
+#define XPRECONDITION_MSG(expr, ...) ((void)0)
+#define XPOSTCONDITION(expr) ((void)0)
+#define XPOSTCONDITION_MSG(expr, ...) ((void)0)
+#define XINVARIANT(expr) ((void)0)
+#define XINVARIANT_MSG(expr, ...) ((void)0)
 #define XASSERT_FLOAT_EQ(lhs, rhs, tol) ((void)0)
 #define XASSERT_FLOAT_NE(lhs, rhs, tol) ((void)0)
 #define XASSERT_NOT_NULL(ptr) ((void)0)
