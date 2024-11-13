@@ -4,6 +4,6 @@
 tmp/
 docs/
 build/
-*.submlime-project
-.dir-locals-el
+*.sublime-project
+.dir-locals.el
 .cache

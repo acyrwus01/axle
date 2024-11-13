@@ -1,6 +1,7 @@
 #include "DebugLogger.h"
 #include "ConsoleLoggerHandler.h"
 #include "FileLoggerHandler.h"
+#include "../dbg/xassert.h"
 #include <thread>
 #include <iostream>
 
@@ -10,8 +11,8 @@ void logSampleMessages(const std::string& prefix) {
     LOGL("WARNING", prefix, " Memory usage is above threshold: ", 75, "%");
     LOGL("ERROR", prefix, " Critical failure in module ", "network");
 }
+void test_log(){
 
-int main() {
     auto& logger = DebugLogger::getInstance();
 
     // Test 1: Console and File Logging
@@ -38,5 +39,24 @@ int main() {
         std::cerr << "File Logger Error: " << e.what() << std::endl;
     }
 
-    return 0;
+}
+
+void test_asserts()
+{
+    int x = 5;
+    int y = 10;
+
+    // This will print "Check failed" message to std::cerr but won't terminate the program
+    XCHECK(x > y);
+
+    // This will also print the failure with a custom message but won't terminate the program
+    XCHECK_MSG(x > y, "Expected: ", x, " to be greater than ", y);
+
+    std::cout << "Program continues after check failures.\n";
+
+}
+
+int main() {
+    test_log();
+    test_asserts();
 }
