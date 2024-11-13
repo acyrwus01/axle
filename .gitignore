@@ -3,6 +3,7 @@
 *.log
 tmp/
 docs/
-build/*
+build/
 *.submlime-project
 .dir-locals-el
+.cache
