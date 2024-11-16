@@ -1,3 +1,0 @@
-/home/alex/build/Cpp/DBG/build/CMakeFiles/DBG.dir
-/home/alex/build/Cpp/DBG/build/CMakeFiles/edit_cache.dir
-/home/alex/build/Cpp/DBG/build/CMakeFiles/rebuild_cache.dir
